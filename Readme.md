@@ -1,8 +1,8 @@
-# Courses API Express Server
-This is intended to be the backend for the Courses API exercises.
+# Courses2 API Express Server
+This is the full backend for the Courses API exercises and supports GET, POST, PUT and DELETE endpoints for courses.
 
 ## Setup this server locally
-This section will discuss how to get the Courses API server up and running locally
+This section discusses how to get the Courses API server up and running locally
 
 - Verify Node.js is installed by running the following command.
   
@@ -20,13 +20,13 @@ This section will discuss how to get the Courses API server up and running local
 - Clone this repository to your local computer.
 
   ```bash
-    git clone https://github.com/DevelopIntelligenceBoulder/courses-api-express-server
+    git clone https://github.com/DevelopIntelligenceBoulder/courses2-api-express-server
   ```
 
 - Change directories (`cd`) into the newly cloned projects folder.
 
   ```bash
-    cd courses-api-express-server
+    cd courses2-api-express-server
   ```
 
 - Install the projects dependencies with NPM (Node Package Manager).
