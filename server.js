@@ -82,6 +82,7 @@ app.post("/api/courses", urlencodedParser, function (req, res) {
     // Create the course w/ new id 
     let course = {
         id: nextCourseId,
+        dept: req.body.dept,
         courseNum: req.body.courseNum,
         courseName: req.body.courseName,
         instructor: req.body.instructor,
