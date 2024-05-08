@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Details</title>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <th>Department</th>
+                <th>Course Number</th>
+                <th>Title</th>
+                <th>Instructor</th>
+                <th>Start Date</th>
+                <th>Course Length</th>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+        <script>
+            window.onload = function () {
+                const tbody = document.getElementById("tbody");
+                let urlParams = window.location.search;
+                console.log(urlParams);
+                let id = urlParams.slice(1);
+                console.log(id);
+                const course = fetch(`http://localhost:8081/api/courses/${id}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                        tbody.insertRow().innerHTML = `
+                        <td>${data.dept}</td>
+                        <td>${data.courseNum}</td>
+                        <td>${data.courseName}</td>
+                        <td>${data.instructor}</td>
+                        <td>${data.startDate}</td>
+                        <td>${data.numDays}</td>
+                    `;
+                    });
+            };
+        </script>
+        <!-- <script src="./details.js"></script> -->
+    </body>
+</html>

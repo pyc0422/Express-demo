@@ -17,7 +17,7 @@ app.use(express.json());
 // API endpoints
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, '/index.html'));
+    res.sendFile(path.join(__dirname, "/index.html"));
 });
 
 // GET all courses
@@ -43,12 +43,12 @@ app.get("/api/courses/:id", function (req, res) {
     data = JSON.parse(data);
 
     // Find the course
-    let match = data.find(c => c.id == id);
+    let match = data.find((c) => c.id == id);
 
     // If course not found
     if (match == undefined) {
         console.log("LOG: **NOT FOUND**: course " + id + " does not exist!");
-        res.status(404).send();   // not found
+        res.status(404).send(); // not found
         return;
     }
 
@@ -66,11 +66,18 @@ app.post("/api/courses", urlencodedParser, function (req, res) {
     console.log(JSON.stringify(req.body));
 
     // If not all course data passed, requect the request
-    if (!req.body.dept || !req.body.courseNum || !req.body.courseName ||
-        !req.body.instructor || !req.body.startDate || !req.body.numDays) {
-
-        console.log("LOG: **MISSING DATA**: one or more course properties missing");
-        res.status(400).send();   // can't process due to 1 or more missing properties
+    if (
+        !req.body.dept ||
+        !req.body.courseNum ||
+        !req.body.courseName ||
+        !req.body.instructor ||
+        !req.body.startDate ||
+        !req.body.numDays
+    ) {
+        console.log(
+            "LOG: **MISSING DATA**: one or more course properties missing"
+        );
+        res.status(400).send(); // can't process due to 1 or more missing properties
         return;
     }
 
@@ -78,15 +85,21 @@ app.post("/api/courses", urlencodedParser, function (req, res) {
     data = JSON.parse(data);
 
     // Get the id of this new course
-    let nextIdData = fs.readFileSync(__dirname + "/data/" + "next-ids.json", "utf8");
+    let nextIdData = fs.readFileSync(
+        __dirname + "/data/" + "next-ids.json",
+        "utf8"
+    );
     nextIdData = JSON.parse(nextIdData);
 
     let nextCourseId = nextIdData.nextCourseId;
 
     nextIdData.nextCourseId++;
-    fs.writeFileSync(__dirname + "/data/" + "next-ids.json", JSON.stringify(nextIdData));
+    fs.writeFileSync(
+        __dirname + "/data/" + "next-ids.json",
+        JSON.stringify(nextIdData)
+    );
 
-    // Create the course w/ new id 
+    // Create the course w/ new id
     let course = {
         id: nextCourseId,
         dept: req.body.dept,
@@ -94,18 +107,21 @@ app.post("/api/courses", urlencodedParser, function (req, res) {
         courseName: req.body.courseName,
         instructor: req.body.instructor,
         startDate: req.body.startDate,
-        numDays: Number(req.body.numDays)
+        numDays: Number(req.body.numDays),
     };
 
     data.push(course);
-    fs.writeFileSync(__dirname + "/data/" + "courses.json", JSON.stringify(data));
+    fs.writeFileSync(
+        __dirname + "/data/" + "courses.json",
+        JSON.stringify(data)
+    );
 
     // LOG data for tracing
     console.log("LOG: New course added is -> ");
     console.log(course);
 
     res.status(201).json(course);
-})
+});
 
 // PUT to update a course
 app.put("/api/courses/:id", function (req, res) {
@@ -129,12 +145,12 @@ app.put("/api/courses/:id", function (req, res) {
     data = JSON.parse(data);
 
     // Find the course
-    let match = data.find(c => c.id == id);
+    let match = data.find((c) => c.id == id);
 
     // If course not found
     if (match == undefined) {
         console.log("LOG: **NOT FOUND**: course " + id + " does not exist!");
-        res.status(404).send();   // not found
+        res.status(404).send(); // not found
         return;
     }
 
@@ -160,14 +176,17 @@ app.put("/api/courses/:id", function (req, res) {
         match.numDays = Number(req.body.numDays);
     }
 
-    fs.writeFileSync(__dirname + "/data/" + "courses.json", JSON.stringify(data));
+    fs.writeFileSync(
+        __dirname + "/data/" + "courses.json",
+        JSON.stringify(data)
+    );
 
     // LOG data for tracing
     console.log("LOG: Updated course is -> ");
     console.log(match);
 
     res.status(200).send();
-})
+});
 
 // DELETE a specific course
 app.delete("/api/courses/:id", function (req, res) {
@@ -178,7 +197,7 @@ app.delete("/api/courses/:id", function (req, res) {
     data = JSON.parse(data);
 
     // Find the course
-    let matchingIndex = data.findIndex(c => c.id == id);
+    let matchingIndex = data.findIndex((c) => c.id == id);
 
     // If course found, delete it
     if (matchingIndex >= 0) {
@@ -187,14 +206,21 @@ app.delete("/api/courses/:id", function (req, res) {
         console.log(data[matchingIndex]);
 
         data.splice(matchingIndex, 1);
-        fs.writeFileSync(__dirname + "/data/" + "courses.json", JSON.stringify(data));
+        fs.writeFileSync(
+            __dirname + "/data/" + "courses.json",
+            JSON.stringify(data)
+        );
     }
 
     // Note:  not found is not an error, because the goal is
     //        for it to be gone!
 
     res.status(200).send();
-})
+});
+
+app.get("/details/", (req, res) => {
+    res.sendFile(path.join(__dirname, "/details.html"));
+});
 
 /////////////////////////////////////////////////////
 // Start the server
@@ -203,5 +229,5 @@ app.delete("/api/courses/:id", function (req, res) {
 
 let server = app.listen(8081, function () {
     let port = server.address().port;
-    console.log("LOG: App listening at port %s", port);
+    console.log("LOG: App listening at http://localhost:%s", port);
 });
