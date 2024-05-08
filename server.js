@@ -2,6 +2,9 @@ let express = require("express");
 let fs = require("fs");
 let cors = require("cors");
 const { machine } = require("os");
+const req = require("express/lib/request");
+
+let path = require("path");
 
 let app = express();
 app.use(cors());
@@ -12,6 +15,10 @@ app.use(express.json());
 
 ////////////////////////////////////////////////////////////
 // API endpoints
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, '/index.html'));
+});
 
 // GET all courses
 app.get("/api/courses", function (req, res) {
