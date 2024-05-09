@@ -222,6 +222,9 @@ app.get("/details/", (req, res) => {
     res.sendFile(path.join(__dirname, "/details.html"));
 });
 
+app.get("/newcourse", (req, res) => {
+    res.sendFile(path.join(__dirname, "/newcourse.html"));
+})
 /////////////////////////////////////////////////////
 // Start the server
 
