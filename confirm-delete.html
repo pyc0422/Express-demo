@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <script>
+        window.onload = () => {
+            const h1 = document.querySelector("h1");
+            let urlParams = window.location.search;
+            let id = urlParams.slice(1);
+            let name;
+            fetch(`http://localhost:8081/api/courses/${id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    name = data.courseName;
+                    h1.innerHTML = `Delete ${data.courseName}?`;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+            
+            document.getElementById("comfirm").addEventListener("click", () => {
+                fetch(`http://localhost:8081/api/courses/${id}`, {method: "DELETE"})
+                    .then(() => {
+                        alert(`${name} deleted!`)
+                        window.location.href = '/';
+                    })
+                     .catch((error) => {
+                        console.error(error);
+                    });
+            })
+        }
+    </script>
+    <body class="flex justify-center items-center">
+        <div class="border border-2 rounded-lg mt-20 p-8 flex flex-col gap-5 justify-center items-center">
+            <h1 class="text-3xl font-bold">Delete?</h1>
+            <h2 class="text-xl font-semibold">Do you really want to delete it?</h2>
+            <div>
+                <button id="comfirm" class="border rounded-md py-1 px-8 text-black font-semibold hover:opacity-60">Yes</button>
+                <a href="/" class="border rounded-md py-1 px-8 text-black font-semibold hover:opacity-60">No</a>
+            </div>
+        </div>
+
+    </body>
+</html>

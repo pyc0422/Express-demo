@@ -24,7 +24,7 @@
                 console.log(urlParams);
                 let id = urlParams.slice(1);
                 console.log(id);
-                const course = fetch(`http://localhost:8081/api/courses/${id}`)
+                fetch(`http://localhost:8081/api/courses/${id}`)
                     .then((response) => response.json())
                     .then((data) => {
                         console.log(data);
@@ -36,6 +36,9 @@
                         <td>${data.startDate}</td>
                         <td>${data.numDays}</td>
                     `;
+                    })
+                    .catch((error) => {
+                        console.error(error);
                     });
             };
         </script>

@@ -225,6 +225,10 @@ app.get("/details/", (req, res) => {
 app.get("/newcourse", (req, res) => {
     res.sendFile(path.join(__dirname, "/newcourse.html"));
 })
+app.get("/confirm-delete/", (req, res) => {
+    res.sendFile(path.join(__dirname, "/confirm-delete.html"));
+})
+
 /////////////////////////////////////////////////////
 // Start the server
 

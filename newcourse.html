@@ -44,7 +44,8 @@
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
-                    window.location.href = "http://localhost:8081/";
+                    alert(`New course ${data.courseName} added!`)
+                    window.location.href = "/";
                 })
                 .catch(error => console.error(error));
             }

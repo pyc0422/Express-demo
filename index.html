@@ -4,34 +4,48 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style type="text/tailwindcss">
+            @layer utilities {
+              td {
+                @apply p-2 border-b font-normal;
+              }
+              th {
+                @apply mx-1 px-2
+              }
+            }
+        </style>
     </head>
     <script>
         window.onload = function () {
             fetch("http://localhost:8081/api/courses")
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data);
                     let tbody = document.getElementById("tbody");
                     data.forEach((element) => {
                         tbody.insertRow().innerHTML = `
                         <td>${element.dept}</td>
-                        <td>${element.courseNum}</td>
-                        <td><a href="http://localhost:8081/details?${element.id}">${element.courseName}</a></td>
-                    `;
+                        <td class="text-center">${element.courseNum}</td>
+                        <td><a class="underline font-semibold hover:text-blue-600" href="http://localhost:8081/details?${element.id}">${element.courseName}</a></td>
+                        <td><a class="py-1 px-4 border font-semibold hover:opacity-60" href="http://localhost:8081/confirm-delete?${element.id}">
+                            Delete</a></td>
+                        `;
                     });
                 })
                 .catch((error) => {
                     console.error(error);
                 });
-
         };
+
     </script>
-    <body>
-        <header>
-            <h1>Course Management System</h1>
+    <body class="flex flex-col justify-center items-center mb-8">
+        <header class="flex justify-center items-center m-2 p-8">
+            <p class="font-bold text-3xl">Course Management System</p>
         </header>
-        <a id="new-course" href="http://localhost:8081/newcourse">New Course</n>
-        <table>
+        <div class="m-4 p-2">
+            <a class="border rounded-md py-1 px-8 text-black font-semibold hover:opacity-60" href="http://localhost:8081/newcourse">New Course</a>
+        </div>
+        <table class="gap-5">
             <thead>
                 <tr>
                     <th>Department</th>
@@ -39,7 +53,7 @@
                     <th>Title</th>
                 </tr>
             </thead>
-            <tbody id="tbody"></tbody>
+            <tbody id="tbody" class="border border-t"></tbody>
         </table>
     </body>
 </html>
